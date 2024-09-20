@@ -25,11 +25,11 @@ def Post_API(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-@api_view
+@api_view(['PUT'])
 def Put_API(request,id):
-    student = StudentData.objects.get(id=id) # pylint: disable=no-member
+    student = StudentData.objects.get(pk=id) # pylint: disable=no-member
     serializer = StudentSerializer(student, data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
