@@ -33,3 +33,13 @@ def Put_API(request,id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PATCH'])
+def Patch_API(request,id):
+    student = StudentData.objects.get(pk=id) # pylint: disable=no-member
+    serializer = StudentSerializer(student, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
