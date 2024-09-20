@@ -43,3 +43,9 @@ def Patch_API(request,id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def Delete_API(request,id):
+    student = StudentData.objects.get(pk=id) # pylint: disable=no-member
+    student.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
