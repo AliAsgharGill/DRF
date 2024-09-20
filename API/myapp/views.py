@@ -13,6 +13,11 @@ def Get_API(request):
     serializer = StudentSerializer(mydata, many=True)
     return Response(serializer.data)
 
+@api_view(["GET"])
+def Get_Student(request,id):
+    student_data = StudentData.objects.get(pk=id) # pylint: disable=no-member
+    serializer = StudentSerializer(student_data)
+    return Response(serializer.data) if serializer else Response(serializer.errors, status=404)
 
 @csrf_exempt
 @api_view(['POST'])
